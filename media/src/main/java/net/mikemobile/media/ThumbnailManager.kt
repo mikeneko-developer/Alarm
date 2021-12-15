@@ -6,6 +6,9 @@ import android.graphics.BitmapFactory
 import android.media.MediaMetadataRetriever
 import android.media.ThumbnailUtils
 import android.provider.MediaStore
+import android.util.Log
+import java.io.ByteArrayInputStream
+import java.io.InputStream
 
 
 class ThumbnailManager {
@@ -44,16 +47,35 @@ class ThumbnailManager {
             return thumbnail
         }
 
-        fun getArtWork(filePath: String): Bitmap? {
-            var bm: Bitmap? = null
-            val mmr = MediaMetadataRetriever()
-            mmr.setDataSource(filePath)
-            val data = mmr.embeddedPicture
+        fun getArtWork(key: String, filePath: String): Bitmap? {
+            var bitmap = getImage(key)
 
-            // 画像が無ければnullになる
-            if (null != data) {
-                bm = BitmapFactory.decodeByteArray(data, 0, data.size)
+            if (bitmap == null) {
+                bitmap = getArtWork(filePath)
+
             }
+
+            return bitmap
+        }
+
+
+        fun getArtWork(filePath: String): Bitmap? {
+            Log.i(TAG, "filePath:" + filePath)
+
+            var bm: Bitmap? = null
+            try {
+                val mmr = MediaMetadataRetriever()
+                mmr.setDataSource(filePath)
+                val data = mmr.embeddedPicture
+
+                // 画像が無ければnullになる
+                if (null != data) {
+                    bm = BitmapFactory.decodeByteArray(data, 0, data.size)
+                }
+            } catch(e: Exception) {
+                Log.e(TAG, "" + filePath + " / " + e.toString())
+            }
+
             return bm
         }
 

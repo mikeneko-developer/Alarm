@@ -24,6 +24,7 @@ import net.mikemobile.databindinglib.base.BaseActivity
 import net.mikemobile.databindinglib.base.BaseFragmentFactory
 import net.mikemobile.media.MediaUtilityManager
 import net.mikemobile.media.MediaUtilityManager.Companion.getMediaManager
+import net.mikemobile.media.ThumbnailManager
 import net.mikemobile.sampletimer.music.MusicController
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -112,7 +113,7 @@ class MainActivity : BaseActivity(), MainActivityNavigator {
         viewModel.unInit()
         val mediaManager = getMediaManager(this)
         mediaManager.onClearData()
-        
+        ThumbnailManager.reset()
     }
 
     override fun onBack() {

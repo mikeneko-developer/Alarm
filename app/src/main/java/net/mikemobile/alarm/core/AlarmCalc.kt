@@ -21,7 +21,7 @@ class AlarmCalc {
                 item.minute
             )
 
-            var time = CustomDateTime.getTimeInMillisStartHour(item.hour, item.minute)
+            val time = CustomDateTime.getTimeInMillisStartHour(item.hour, item.minute)
             var this_time = CustomDateTime.getJastTimeInMillis()
             if (startDateTime > 0L) {
                 this_time = startDateTime
