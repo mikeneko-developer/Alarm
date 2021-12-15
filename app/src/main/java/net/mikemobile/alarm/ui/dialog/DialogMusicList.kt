@@ -238,22 +238,22 @@ class DialogMusicList : DialogFragment() {
             return 0
         }
 
-        override fun getView(posi: Int, convertView: View, parent: ViewGroup): View {
-            var convertView = convertView
-            if (null == convertView) {
+        override fun getView(posi: Int, convertView: View?, parent: ViewGroup?): View {
+            var convertViews = convertView
+            if (convertViews == null) {
                 val layoutInflater_ =
                     context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-                convertView = layoutInflater_.inflate(R.layout.list_dialog_item_music, null)
+                convertViews = layoutInflater_.inflate(R.layout.list_dialog_item_music, null)
             }
-            val textView = convertView.findViewById<View>(R.id.textView2) as TextView
+            val textView = convertViews!!.findViewById<View>(R.id.textView2) as TextView
             if (type == 1) {
                 textView.text = list!![posi].album
             } else {
                 textView.text = list!![posi].artist
             }
-            val background = convertView.findViewById<View>(R.id.background) as LinearLayout
+            val background = convertViews!!.findViewById<View>(R.id.background) as LinearLayout
 
-            val imageView = convertView.findViewById<View>(R.id.imageView4) as ImageView
+            val imageView = convertViews!!.findViewById<View>(R.id.imageView4) as ImageView
             if (list[posi].title == "戻る") {
                 imageView.setImageResource(net.mikemobile.media.R.drawable.ic_arrow_back)
                 imageView.setColorFilter(Color.rgb(200, 200, 200))
@@ -282,7 +282,7 @@ class DialogMusicList : DialogFragment() {
             } else {
                 background.setBackgroundColor(Color.WHITE)
             }
-            return convertView
+            return convertViews!!
         }
     }
 
@@ -308,17 +308,18 @@ class DialogMusicList : DialogFragment() {
             return 0
         }
 
-        override fun getView(posi: Int, convertView: View, parent: ViewGroup): View {
-            var convertView = convertView
-            if (null == convertView) {
+        override fun getView(posi: Int, convertView: View?, parent: ViewGroup?): View {
+            var convertViews = convertView
+
+            if (convertViews == null) {
                 val layoutInflater_ =
-                    context!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-                convertView = layoutInflater_.inflate(R.layout.list_dialog_item_music, null)
+                    context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+                convertViews = layoutInflater_.inflate(R.layout.list_dialog_item_music, null)
             }
-            val textView = convertView.findViewById<View>(R.id.textView2) as TextView
+            val textView = convertViews!!.findViewById<View>(R.id.textView2) as TextView
             textView.text = list[posi].title
 
-            val imageView = convertView.findViewById<View>(R.id.imageView4) as ImageView
+            val imageView = convertViews!!.findViewById<View>(R.id.imageView4) as ImageView
             if (list[posi].title == "戻る") {
                 imageView.setImageResource(net.mikemobile.media.R.drawable.ic_arrow_back)
                 imageView.setColorFilter(Color.rgb(200, 200, 200))
@@ -341,13 +342,13 @@ class DialogMusicList : DialogFragment() {
             }
 
             //imageView.setImageURI(list.get(posi).getData());
-            val background = convertView.findViewById<View>(R.id.background) as LinearLayout
+            val background = convertViews!!.findViewById<View>(R.id.background) as LinearLayout
             if (mediaData != null && mediaData!!.title == list[posi].title && mediaData!!.path == list[posi].path) {
                 background.setBackgroundColor(Color.parseColor("#F6B448"))
             } else {
                 background.setBackgroundColor(Color.WHITE)
             }
-            return convertView
+            return convertViews!!
         }
     }
 }
