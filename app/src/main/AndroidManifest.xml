@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="net.mikemobile.alarm">
+
+
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO"></uses-permission>
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.SET_ALARM"/>
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+    <uses-permission android:name="com.android.alarm.permission.SET_TIME"/>
+
+
+    <!-- 起動完了通知 -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+
+    <application
+        android:requestLegacyExternalStorage="true"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:name="net.mikemobile.alarm.setup.DataBindingApplication"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:launchMode="singleTask"
+        android:theme="@style/Theme.Alarm">
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTask"
+            android:alwaysRetainTaskState="true"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
+        <activity android:name=".AlarmActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+
+        <service android:name="net.mikemobile.alarm.services.AlarmService"/>
+
+        <receiver android:name="net.mikemobile.alarm.services.TimeReceiver"
+            android:exported="true">
+            <intent-filter>
+
+                <!--  -->
+                <action android:name="net.mikemobile.alarm.myaction.loop"/>
+
+                <!-- 1日の切り替わりを検知（ネットワークの接続が変更されても呼ばれるが問題なし） -->
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="your.package.name.action.DATE_CHANGED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIME_TICK" />
+
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.intent.action.CONFIGURATION_CHANGED" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+
+                <action android:name="com.htc.intent.action.CONFIGURATION_CHANGED" />
+                <action android:name="com.htc.intent.action.PACKAGE_ADDED" />
+                <action android:name="com.htc.intent.action.BATTERY_CHANGED" />
+                <action android:name="com.htc.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="com.htc.intent.action.ACTION_POWER_DISCONNECTED" />
+
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name="net.mikemobile.alarm.services.SystemReceiver"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <!-- 起動、画面表示・非表示検知 -->
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+
+                <!-- モードが変更された時の通知を受け取る(サイレントモード⇒マナーモード等) -->
+                <action android:name="android.media.RINGER_MODE_CHANGED" />
+                <!-- ボリュームが変更された通知を受け取る -->
+                <action android:name="android.media.VOLUME_CHANGED_ACTION" />
+
+                <!-- 自身の再インストール -->
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+
+            </intent-filter>
+        </receiver>
+        <!--
+        <receiver android:name="net.mikemobile.alarm.delete.AlarmStopReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="net.mikemobile.myaction.alarm.stop"/>
+                <action android:name="net.mikemobile.myaction.alarm.sunuzu"/>
+            </intent-filter>
+        </receiver>-->
+    </application>
+
+</manifest>

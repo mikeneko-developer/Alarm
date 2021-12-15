@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <!-- 押下状態 -->
+    <item android:state_enabled="true"
+        android:state_pressed="true"
+        android:drawable="@drawable/frame_button_pressed" />
+    <!-- 無効状態 -->
+    <item android:state_enabled="false"
+        android:drawable="@drawable/frame_button_disabled" />
+    <!-- 通常状態 -->
+    <item android:drawable="@drawable/frame_button" />
+</selector>

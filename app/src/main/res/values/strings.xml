@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">目覚ませ時計</string>
+
+    <string name="notification_navi_content_title">ナビゲーションアプリ</string>
+    <string name="notification_navi_content_text">ナビサービス起動中</string>
+    <string name="notification_navi_button_title">アラーム停止</string>
+    <string name="notification_navi_button_cancel">アラーム解除</string>
+    <string name="space"></string>
+
+
+    <string name="show_alarm_btn_sunuzu1">停止</string>
+    <string name="show_alarm_btn_sunuzu2">スヌーズ</string>
+</resources>

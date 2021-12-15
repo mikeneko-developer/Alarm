@@ -1,0 +1,616 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+        <import type="net.mikemobile.alarm.R" />
+        <variable
+            name="viewmodel"
+            type="net.mikemobile.alarm.ui.edit.EditViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_color">
+
+        <include
+            android:id="@+id/include_toolbar"
+            layout="@layout/toolber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/button2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include_toolbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="50dp"
+                    android:background="#FFFFFF"
+                    android:onClick="@{() -> viewmodel.clickMode()}"
+                    android:src="@{viewmodel.data.stopMode ? @drawable/ic_mode_on : @drawable/ic_mode_off}"
+                    app:layout_constraintStart_toStartOf="@+id/imageView11"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView11"
+                    app:srcCompat="@drawable/ic_mode_off" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout3"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView5"
+                    app:layout_constraintTop_toTopOf="@+id/imageView5">
+
+                    <ImageView
+                        android:id="@+id/imageView7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/btn_selector"
+                        android:onClick="@{() -> viewmodel.clickModeMinus()}"
+                        app:srcCompat="@drawable/ic_arrow_back" />
+
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/viewPager2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                    </androidx.viewpager2.widget.ViewPager2>
+
+                    <ImageView
+                        android:id="@+id/imageView13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/btn_selector"
+                        android:onClick="@{() -> viewmodel.clickModePlus()}"
+                        android:rotationY="180"
+                        app:srcCompat="@drawable/ic_arrow_back" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#FFFFFF"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@mipmap/icon_title" />
+
+                <EditText
+                    android:id="@+id/fragment_alarm_edit_input_title2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:ems="10"
+                    android:hint="タイトル"
+                    android:inputType="textPersonName"
+                    android:text="@={viewmodel.data.title}"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView6"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView6"
+                    app:layout_constraintTop_toTopOf="@+id/imageView6" />
+
+                <ImageView
+                    android:id="@+id/imageView8"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#FFFFFF"
+                    android:onClick="@{() -> viewmodel.clickChangeSwitch()}"
+                    android:src="@{viewmodel.data.onoff ? @drawable/alarm_on : @drawable/alarm_off}"
+                    app:layout_constraintStart_toStartOf="@+id/imageView6"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView6"
+                    app:srcCompat="@drawable/alarm_off" />
+
+                <TextView
+                    android:id="@+id/tv_time2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:gravity="center_horizontal"
+                    android:hint="07:00"
+                    android:onClick="@{() -> viewmodel.clickOpenTimeDialog()}"
+                    android:text="@={viewmodel.viewTime}"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="50sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView8"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView8"
+                    app:layout_constraintTop_toTopOf="@+id/imageView8" />
+
+                <ImageView
+                    android:id="@+id/imageView9"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#FFFFFF"
+                    android:onClick="@{() -> viewmodel.clickLoop()}"
+                    android:src="@{viewmodel.data.type == 2 ? @drawable/icon_switch_loop : @drawable/icon_switch_one}"
+                    app:layout_constraintStart_toStartOf="@+id/imageView8"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView8"
+                    app:srcCompat="@drawable/icon_switch_one" />
+
+
+                <LinearLayout
+                    android:id="@+id/ll_week_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:orientation="vertical"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView9"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView9"
+                    app:layout_constraintTop_toTopOf="@+id/imageView9">
+
+                    <TextView
+                        android:id="@+id/tv_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="1016/07/15"
+                        android:onClick="@{() -> viewmodel.clickOpenDateDialog()}"
+                        android:text="@={viewmodel.viewDate}"
+                        android:textSize="50sp"
+                        android:visibility="@{viewmodel.data.type == 2 ? View.GONE : View.VISIBLE}" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="@{viewmodel.data.type == 2 ? View.VISIBLE : View.GONE}"
+                        tools:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/sun"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{() -> viewmodel.clickWeek(0)}"
+                            android:text="日"
+                            android:textColor="@{viewmodel.data.week_sun == 1 ? @color/week_on : @color/week_off}"
+                            android:textSize="40sp" />
+
+                        <TextView
+                            android:id="@+id/mon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{() -> viewmodel.clickWeek(1)}"
+                            android:text="月"
+                            android:textColor="@{viewmodel.data.week_mon == 1 ? @color/week_on : @color/week_off}"
+                            android:textSize="40sp" />
+
+                        <TextView
+                            android:id="@+id/tue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{() -> viewmodel.clickWeek(2)}"
+                            android:text="火"
+                            android:textColor="@{viewmodel.data.week_tue == 1 ? @color/week_on : @color/week_off}"
+                            android:textSize="40sp" />
+
+                        <TextView
+                            android:id="@+id/wed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{() -> viewmodel.clickWeek(3)}"
+                            android:text="水"
+                            android:textColor="@{viewmodel.data.week_wed == 1 ? @color/week_on : @color/week_off}"
+                            android:textSize="40sp" />
+
+                        <TextView
+                            android:id="@+id/thu"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{() -> viewmodel.clickWeek(4)}"
+                            android:text="木"
+                            android:textColor="@{viewmodel.data.week_the == 1 ? @color/week_on : @color/week_off}"
+                            android:textSize="40sp" />
+
+                        <TextView
+                            android:id="@+id/fri"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{() -> viewmodel.clickWeek(5)}"
+                            android:text="金"
+                            android:textColor="@{viewmodel.data.week_fri == 1 ? @color/week_on : @color/week_off}"
+                            android:textSize="40sp" />
+
+                        <TextView
+                            android:id="@+id/sat"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{() -> viewmodel.clickWeek(6)}"
+                            android:text="土"
+                            android:textColor="@{viewmodel.data.week_sat == 1 ? @color/week_on : @color/week_off}"
+                            android:textSize="40sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imageView10"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="24dp"
+                    android:background="#FFFFFF"
+                    app:layout_constraintStart_toStartOf="@+id/imageView9"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView9"
+                    app:srcCompat="@mipmap/icon_sound" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView10"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView10"
+                    app:layout_constraintTop_toTopOf="@+id/imageView10">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_sound"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:hint="曲名"
+                            android:onClick="@{() -> viewmodel.clickOpenMusic()}"
+                            android:onLongClick="@{() -> viewmodel.longClickMusic()}"
+                            android:singleLine="true"
+                            android:text="@={viewmodel.viewMusicName}"
+                            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                        <ImageView
+                            android:id="@+id/iv_play"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:onClick="@{() -> viewmodel.clickPlay()}"
+                            android:src="@{viewmodel.soundPlay ? @drawable/pause : @drawable/play}"
+                            app:srcCompat="@mipmap/play" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_volume"
+                            android:layout_width="50dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:hint="音量"
+                            android:singleLine="true"
+                            android:text="@={viewmodel.viewVolume}"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textSize="14sp" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="7dp"
+                            android:paddingBottom="7dp" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imageView11"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="40dp"
+                    android:background="#FFFFFF"
+                    android:onClick="@{() -> viewmodel.clickChangeSunuzu()}"
+                    android:src="@{viewmodel.sunuzuOnOff ? @drawable/icon_sunuzu_on : @drawable/icon_sunuzu_off}"
+                    app:layout_constraintStart_toStartOf="@+id/imageView12"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView12"
+                    app:srcCompat="@mipmap/icon_sunuzu_off" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:visibility="@{viewmodel.sunuzuOnOff ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView11"
+                    app:layout_constraintStart_toEndOf="@+id/imageView11"
+                    app:layout_constraintTop_toTopOf="@+id/imageView11">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/fragment_alarm_edit_button_sunuzu1_up"
+                            android:layout_width="60dp"
+                            android:layout_height="40dp"
+                            android:onClick="@{() -> viewmodel.clickSunuzuTime(1)}"
+                            android:text="+" />
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:text="@{viewmodel.viewSunuzuTime}"
+                            android:textSize="18sp" />
+
+                        <Button
+                            android:id="@+id/fragment_alarm_edit_button_sunuzu1_down"
+                            android:layout_width="60dp"
+                            android:layout_height="40dp"
+                            android:onClick="@{() -> viewmodel.clickSunuzuTime(-1)}"
+                            android:text="-" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ごと"
+                        android:textSize="18sp"
+                        android:visibility="@{viewmodel.sunuzuCustom ? View.GONE : View.VISIBLE}" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:visibility="@{viewmodel.sunuzuOnOff ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView11"
+                    app:layout_constraintStart_toEndOf="@+id/linearLayout"
+                    app:layout_constraintTop_toTopOf="@+id/imageView11">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="@{viewmodel.sunuzuCustom ? View.GONE : View.VISIBLE}">
+
+                        <Button
+                            android:id="@+id/fragment_alarm_edit_button_sunuzu2_up"
+                            android:layout_width="60dp"
+                            android:layout_height="40dp"
+                            android:onClick="@{() -> viewmodel.clickSunuzuCount(1)}"
+                            android:text="+" />
+
+                        <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:text="@={viewmodel.viewSunuzuCount}"
+                            android:textSize="18sp" />
+
+                        <Button
+                            android:id="@+id/fragment_alarm_edit_button_sunuzu2_down"
+                            android:layout_width="60dp"
+                            android:layout_height="40dp"
+                            android:onClick="@{() -> viewmodel.clickSunuzuCount(-1)}"
+                            android:text="-" />
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/button4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{() -> viewmodel.clickSunuzuList()}"
+                        android:text="スヌーズ指定"
+                        android:visibility="@{viewmodel.sunuzuCustom ? View.VISIBLE : View.GONE}" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imageView12"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="30dp"
+                    android:background="#FFFFFF"
+                    android:onClick="@{() -> viewmodel.clickChangeVib()}"
+                    android:src="@{viewmodel.data.vib >= 1 ? @drawable/icon_vib_on : @drawable/icon_vib_off}"
+                    app:layout_constraintStart_toStartOf="@+id/imageView10"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView10"
+                    app:srcCompat="@mipmap/icon_vib_off" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:weightSum="1"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView12"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView12"
+                    app:layout_constraintTop_toTopOf="@+id/imageView12">
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.20"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="タイプA"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#888888"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:id="@+id/iv_vib1"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:onClick="@{() -> viewmodel.clickChangeVib(1)}"
+                            android:src="@{viewmodel.data.vib == 1 ? @drawable/icon_switch_on : @drawable/icon_switch_off}"
+                            app:srcCompat="@mipmap/icon_switch_off" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.20"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="タイプB"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#888888"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:id="@+id/iv_vib2"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:onClick="@{() -> viewmodel.clickChangeVib(2)}"
+                            android:src="@{viewmodel.data.vib == 2 ? @drawable/icon_switch_on : @drawable/icon_switch_off}"
+                            app:srcCompat="@mipmap/icon_switch_off" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.20"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="タイプC"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#888888"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:id="@+id/iv_vib3"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:onClick="@{() -> viewmodel.clickChangeVib(3)}"
+                            android:src="@{viewmodel.data.vib == 3 ? @drawable/icon_switch_on : @drawable/icon_switch_off}"
+                            app:srcCompat="@mipmap/icon_switch_off" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.20"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="タイプD"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#888888"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:id="@+id/iv_vib4"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:onClick="@{() -> viewmodel.clickChangeVib(4)}"
+                            android:src="@{viewmodel.data.vib == 4 ? @drawable/icon_switch_on : @drawable/icon_switch_off}"
+                            app:srcCompat="@mipmap/icon_switch_off" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.20"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="タイプE"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#888888"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:id="@+id/iv_vib5"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:onClick="@{() -> viewmodel.clickChangeVib(5)}"
+                            android:src="@{viewmodel.data.vib == 5 ? @drawable/icon_switch_on : @drawable/icon_switch_off}"
+                            app:srcCompat="@mipmap/icon_switch_off" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:onClick="@{() -> viewmodel.clickSaveAlarm()}"
+            android:text="保存"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.479"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,60 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Alarm" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+        <item name="colorOnPrimary">@color/black</item>
+
+
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+
+        <!-- スプラッシュ用だが、うまくいかなかったため没 -->
+        <!-- <item name="android:windowBackground">@drawable/splash_drawable</item> -->
+
+        <!-- Customize your theme here. -->
+        <item name="editTextStyle">@style/Theme.Alarm.EditTextStyle</item>
+
+
+        <item name="android:textViewStyle">@style/Theme.Alarm.TextViewStyle</item>
+        <item name="android:editTextStyle">@style/Theme.Alarm.EditTextStyle</item>
+        <item name="android:buttonStyle">@style/Theme.Alarm.ButtonStyle</item>
+    </style>
+
+    <style name="Theme.Alarm.ButtonStyle" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/defaultTextColor</item>
+    </style>
+
+    <style name="Theme.Alarm.TextViewStyle" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/defaultTextColor</item>
+        <item name="android:textColorHint">@color/defaultHintColor</item>
+    </style>
+
+    <style name="Theme.Alarm.EditTextStyle" parent="android:Widget.EditText">
+        <!-- 下線（未選択時） -->
+        <item name="colorControlNormal">#0000FF</item>
+        <item name="android:colorControlNormal">#0000FF</item>
+        <!-- 下線（選択時） -->
+        <item name="colorControlActivated">#000000</item>
+        <item name="android:colorControlActivated">#000000</item>
+
+        <!-- カーソル -->
+        <item name="android:textCursorDrawable">@color/editTextCursorColor</item>
+        <!-- 文字色 -->
+        <item name="android:textColor">@color/defaultTextColor</item>
+        <!-- 文字色（ヒント） -->
+        <item name="android:textColorHint">#4E4E4E</item>
+        <!-- 選択時の色 -->
+        <item name="android:textColorHighlight">#8888FF</item>
+
+    </style>
+
+    <style name="AppTheme.Splash" parent="Theme.AppCompat.DayNight.NoActionBar">
+    </style>
+</resources>

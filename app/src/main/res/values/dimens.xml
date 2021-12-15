@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="common_item_size1000">1000dp</dimen>
+
+
+    <dimen name="btn_round_size">1000dp</dimen>
+
+</resources>

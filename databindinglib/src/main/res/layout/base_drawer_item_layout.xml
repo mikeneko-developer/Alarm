@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:foreground="?android:attr/selectableItemBackground" android:padding="5dp">
+
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            card_view:srcCompat="@drawable/ic_launcher_round"
+            android:id="@+id/drawerItemImage"/>
+    <LinearLayout
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_vertical" android:layout_margin="5dp">
+
+        <TextView
+                android:id="@+id/drawerItemTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:hint="タイトル"/>
+
+        <TextView
+                android:id="@+id/drawerItemText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="テキスト"
+                android:visibility="gone"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,304 @@
+
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewmodel"
+            type="net.mikemobile.alarm.ui.edit.sunuzu.edit.SunuzuEditViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_color">
+
+        <include
+            android:id="@+id/include_toolbar"
+            layout="@layout/toolber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <!--  -->
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="32dp"
+            android:onClick="@{() -> viewmodel.clickChangeSwitch()}"
+            android:src="@{viewmodel.sunuzuItem.onoff ? @drawable/alarm_on : @drawable/alarm_off}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView6"
+            app:srcCompat="@drawable/alarm_off" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="@+id/imageView2"
+            app:layout_constraintTop_toBottomOf="@+id/include_toolbar"
+            app:srcCompat="@mipmap/icon_title" />
+
+        <TextView
+            android:id="@+id/fragment_alarm_sunuzu_textview_year"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:gravity="center"
+            android:hint="0000"
+            android:text="@={viewmodel.inputOwnerYear}"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="@+id/imageView2"
+            app:layout_constraintVertical_bias="0.6" />
+
+        <TextView
+            android:id="@+id/fragment_alarm_sunuzu_textview_month"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:hint="00"
+            android:text="@={viewmodel.inputOwnerMonth}"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/fragment_alarm_sunuzu_textview_year"
+            app:layout_constraintTop_toTopOf="@+id/fragment_alarm_sunuzu_textview_year" />
+
+        <TextView
+            android:id="@+id/fragment_alarm_sunuzu_textview_day"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:hint="00"
+            android:text="@={viewmodel.inputOwnerDay}"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/fragment_alarm_sunuzu_textview_month"
+            app:layout_constraintTop_toTopOf="@+id/fragment_alarm_sunuzu_textview_month" />
+
+        <TextView
+            android:id="@+id/fragment_alarm_sunuzu_textview_hour"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="32dp"
+            android:gravity="center"
+            android:hint="00"
+            android:text="@={viewmodel.inputOwnerHour}"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/fragment_alarm_sunuzu_textview_day"
+            app:layout_constraintTop_toTopOf="@+id/fragment_alarm_sunuzu_textview_day" />
+
+        <TextView
+            android:id="@+id/fragment_alarm_sunuzu_textview_minute"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:hint="00"
+            android:text="@={viewmodel.inputOwnerMinute}"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/fragment_alarm_sunuzu_textview_hour"
+            app:layout_constraintTop_toTopOf="@+id/fragment_alarm_sunuzu_textview_hour" />
+
+        <EditText
+            android:id="@+id/fragment_alarm_sunuzu_edit_input_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:ems="10"
+            android:hint="タイトル"
+            android:inputType="textPersonName"
+            android:text="@={viewmodel.sunuzuItem.title}"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView6"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_alarm_sunuzu_textview_minute"
+            app:layout_constraintStart_toEndOf="@+id/imageView6"
+            app:layout_constraintTop_toTopOf="@+id/imageView6" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_alarm_sunuzu_textview_minute"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2">
+
+            <LinearLayout
+                android:id="@+id/linearLayout_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toStartOf="@+id/linearLayout_hour"
+                app:layout_constraintTop_toTopOf="@+id/linearLayout_hour">
+
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewmodel.clickDay(1)}"
+                    android:text="＋" />
+
+                <EditText
+                    android:id="@+id/fragment_alarm_sunuzu_edit_input_day"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:gravity="center_horizontal"
+                    android:hint="0"
+                    android:inputType="time"
+                    android:text="@={viewmodel.input100}" />
+
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewmodel.clickDay(-1)}"
+                    android:text="-" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout_hour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toStartOf="@+id/linearLayout_minute"
+                app:layout_constraintTop_toTopOf="@+id/linearLayout_minute">
+
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewmodel.clickHour(1)}"
+                    android:text="＋" />
+
+                <EditText
+                    android:id="@+id/fragment_alarm_sunuzu_edit_input_hour"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:gravity="center_horizontal"
+                    android:hint="0"
+                    android:inputType="time"
+                    android:text="@={viewmodel.input10}" />
+
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewmodel.clickHour(-1)}"
+                    android:text="-" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout_minute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="@+id/fragment_alarm_sunuzu_textview_minute"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_alarm_sunuzu_edit_input_title">
+
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewmodel.clickMinute(1)}"
+                    android:text="＋"
+                    android:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/fragment_alarm_sunuzu_edit_input_minute"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:editable="false"
+                    android:ems="10"
+                    android:gravity="center_horizontal"
+                    android:hint="0"
+                    android:inputType="time"
+                    android:text="@={viewmodel.input1}" />
+
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewmodel.clickMinute(-1)}"
+                    android:text="-"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="分後"
+                app:layout_constraintBottom_toBottomOf="@+id/linearLayout_minute"
+                app:layout_constraintStart_toEndOf="@+id/linearLayout_minute"
+                app:layout_constraintTop_toTopOf="@+id/linearLayout_minute" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView10"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="212dp"
+            app:layout_constraintStart_toStartOf="@+id/imageView2"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            app:srcCompat="@mipmap/icon_sound" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView10"
+            app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
+            app:layout_constraintStart_toEndOf="@+id/imageView10"
+            app:layout_constraintTop_toTopOf="@+id/imageView10">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_sound"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:hint="曲名"
+                    android:onClick="@{() -> viewmodel.clickOpenMusic()}"
+                    android:singleLine="true"
+                    android:text="@={viewmodel.sunuzuItem.sound_name}"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <ImageView
+                    android:id="@+id/iv_play"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:onClick="@{() -> viewmodel.clickPlay()}"
+                    android:src="@{viewmodel.soundPlay ? @drawable/pause : @drawable/play}"
+                    app:srcCompat="@mipmap/play" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:onClick="@{() -> viewmodel.clickSaveAlarm()}"
+            android:text="保存"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.479"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

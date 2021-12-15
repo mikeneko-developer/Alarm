@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="colorPrimary">#FFB257</color>
+    <color name="colorPrimaryDark">#C66B00</color>
+    <color name="colorAccent">#03DAC5</color>
+
+    <color name="background_color">@color/white</color>
+    <color name="editTextCursorColor">#FBA540</color>
+    <color name="week_on">#FF981F</color>
+    <color name="week_off">#9E9E9E</color>
+
+
+    <color name="color_background_toolbar">#FF981F</color>
+
+
+    <color name="colorButtonBackground_gradTop">#9D9A96</color>
+    <color name="colorButtonBackground_gradBottom">#616161</color>
+    <color name="colorButtonFrame">#FF981F</color>
+
+
+    <color name="colorButtonBackgroundDis_gradTop">#A09D9A96</color>
+    <color name="colorButtonBackgroundDis_gradBottom">#A0616161</color>
+    <color name="colorButtonFrameDis">#A0FF981F</color>
+
+
+    <color name="colorButtonBackgroundPress_gradTop">@color/white</color>
+    <color name="colorButtonBackgroundPress_gradBottom">#C1C1C1</color>
+    <color name="colorButtonFramePress">#FFB257</color>
+
+
+    <color name="colorListItemBackground_gradTop">#FFFFFF</color>
+    <color name="colorListItemBackground_gradBottom">#C7C7C7</color>
+    <color name="colorListItemBorder">#A5A4A4</color>
+
+
+    <color name="defaultTextColor">#2E2E2E</color>
+    <color name="defaultHintColor">#F74A4A4A</color>
+
+</resources>
