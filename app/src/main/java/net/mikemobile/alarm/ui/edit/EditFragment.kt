@@ -266,9 +266,12 @@ class EditFragment: BaseFragment(), EditFragmentNavigator {
         val dialog = DialogMusicList()
         dialog.selectItem(selectItem)
         dialog.setOnItemClickListener(object : DialogMusicList.OnDialogMusicListListener {
-            override fun selectMusic(mediaInfo: MediaInfo) {
+
+            override fun selectMusic(mediaInfo: MediaInfo?) {
                 dialog.close()
-                viewModel.setMusic(mediaInfo.title,mediaInfo.path)
+                mediaInfo?.let {
+                    viewModel.setMusic(mediaInfo.title,mediaInfo.path)
+                }
             }
         })
         dialog.show(requireActivity().supportFragmentManager,"DialogMusicList")
