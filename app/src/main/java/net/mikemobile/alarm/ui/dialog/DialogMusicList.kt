@@ -246,7 +246,9 @@ class DialogMusicList : DialogFragment() {
                 convertViews = layoutInflater_.inflate(R.layout.list_dialog_item_music, null)
             }
             val textView = convertViews!!.findViewById<View>(R.id.textView2) as TextView
-            if (type == 1) {
+            if (list[posi].title == "戻る") {
+                textView.text = list!![posi].title
+            } else if (type == 1) {
                 textView.text = list!![posi].album
             } else {
                 textView.text = list!![posi].artist

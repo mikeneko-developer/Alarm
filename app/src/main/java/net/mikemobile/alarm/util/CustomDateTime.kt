@@ -287,9 +287,9 @@ class CustomDateTime{
             // 曜日を取得
             val this_week = getWeek(datetime)
 
-            var move = 1
-            val start = 1
-            val end = 7
+            var move = 0
+            val start = 0
+            val end = 6
 
             // 次の指定曜日を確認し、次までの移動日を確認する
             for (count in start..end) {

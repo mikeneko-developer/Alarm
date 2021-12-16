@@ -20,12 +20,16 @@ class AlarmCalc {
                 item.hour,
                 item.minute
             )
+            Log.i(TAG + " ITEM_SAVE","datetime:" + CustomDateTime.getDateTimeText(datetime))
 
             val time = CustomDateTime.getTimeInMillisStartHour(item.hour, item.minute)
             var this_time = CustomDateTime.getJastTimeInMillis()
+
+            Log.i(TAG + " ITEM_SAVE","this_time:" + CustomDateTime.getDateTimeText(this_time))
             if (startDateTime > 0L) {
                 this_time = startDateTime
             }
+            Log.i(TAG + " ITEM_SAVE","this_time:" + CustomDateTime.getDateTimeText(this_time))
 
             if (item.title == "デバッグモード" && startDateTime == 0L) {
                 // 開発モードのため指定日付でそのまま実行
@@ -52,11 +56,23 @@ class AlarmCalc {
                     "OneTime -> datetime:" + CustomDateTime.getDateTimeText(datetime))
             }else if(item.type == Constant.Companion.AlarmType.LoopWeek.id){
 
+                if(datetime <= this_time) {
+                    if (time <= this_time) {
+                        Log.i(TAG + " ITEM_SAVE","今日の日付で指定時刻でも現在時刻より前")
+                        datetime = CustomDateTime.getNextDate(time, 1)
+                    } else {
+                        Log.i(TAG + " ITEM_SAVE","指定の日付が現在時刻より前")
+                        datetime = time
+                    }
+                } else {
+
+                }
+
                 // 曜日で定めるので、常に今日の日付を基準に計算・処理を行う
-                Log.i(TAG + " ITEM_SAVE","prev:" + CustomDateTime.getDateTimeText(this_time))
+                Log.i(TAG + " ITEM_SAVE","prev:" + CustomDateTime.getDateTimeText(datetime))
 
                 val weekList = item.getWeekList()
-                datetime = CustomDateTime.getNextWeekDateTime(this_time, weekList)
+                datetime = CustomDateTime.getNextWeekDateTime(datetime, weekList)
 
                 Log.i(TAG + " ITEM_SAVE","next:" + CustomDateTime.getDateTimeText(datetime))
 
@@ -74,6 +90,7 @@ class AlarmCalc {
          * sunuzuセット
          */
         fun calcNextSunuzu(alarm: Alarm, item: Item) : Alarm? {
+            Log.i(TAG + " ITEM_SAVE","calcNextSunuzu")
 
             val next_minute = Constant.SUNUZU_TIME_LIST[item.sunuzu_time]
 
@@ -90,6 +107,7 @@ class AlarmCalc {
                 var next_time = CustomDateTime.getJastTimeInMillis()
                 next_time = CustomDateTime.getNextMinute(next_time, next_minute)
 
+                Log.i(TAG + " ITEM_SAVE","datetime:" + CustomDateTime.getDateTimeText(next_time))
                 val nextAlarm = Alarm(item)
                 nextAlarm.year = CustomDateTime.getYear(next_time)
                 nextAlarm.month = CustomDateTime.getMonth(next_time)
@@ -109,7 +127,7 @@ class AlarmCalc {
          * カスタムスヌーズ
          */
         fun calcNextCustomSunuzu(alarm: Alarm, item: Item, sunuzuList: List<SunuzuItem>): Alarm? {
-            LogUtil.i(TAG, "setNextCustomSunuzu")
+            Log.i(TAG + " ITEM_SAVE","calcNextCustomSunuzu")
 
             val sunuzuCount = alarm.sunuzu_count
 
