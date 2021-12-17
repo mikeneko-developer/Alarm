@@ -74,13 +74,21 @@ class ListViewModel(
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    fun clickAddItem(){
+    fun leftClick() {
+        //
+        navigator?.onOpenClock()
+    }
+
+    fun rightClick() {
         //
         navigator?.onAddItem(null)
+
+    }
+
+    fun clickAddItem(){
     }
 
     fun clickOpenClock() {
-        navigator?.onOpenClock()
     }
 
     /**

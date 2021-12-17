@@ -35,17 +35,20 @@ import android.os.PowerManager.WakeLock
 import androidx.core.content.ContextCompat
 import android.content.IntentFilter
 import net.mikemobile.alarm.tools.LocalSave
+import net.mikemobile.alarm.util.Constant.Companion.TAG_TIMER_CHECK
 
 
 class TimeReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
+        LogUtil.i(TAG + TAG_TIMER_CHECK, "onReceive()")
+
         context?.let {context ->
             LogUtil.i(TAG,"------------------------------------")
             LogUtil.i(context, TAG,"通知がきました")
 
             intent?.let {
-                LogUtil.i(context, TAG,"action:" + it.action)
+                LogUtil.i(context, TAG + TAG_TIMER_CHECK,"action:" + it.action)
 
                 // ループ処理をチェックする
                 if (it.action.equals("net.mikemobile.alarm.myaction.loop")) {
@@ -115,17 +118,12 @@ class TimeReceiver : BroadcastReceiver() {
         const val TAG = "TimeReceiver"
 
         fun actionReciever(context: Context, text: String) {
-            LogUtil.i(TAG, "actionReciever >> " + text)
+            LogUtil.i(TAG + TAG_TIMER_CHECK, "actionReciever >> " + text)
 
             setLoopEnable(context, true)
             val intent = Intent("net.mikemobile.alarm.myaction.loop")
             intent.setPackage("net.mikemobile.alarm")
             context.applicationContext.sendBroadcast(intent)
-        }
-
-        fun checkLoopEnabled(context: Context): Boolean {
-            val sp = context.getSharedPreferences("timer",Context.MODE_PRIVATE)
-            return sp.getBoolean("ScheduledTime", false)
         }
 
         fun setLoopEnable(context: Context, bool: Boolean) {
@@ -135,17 +133,6 @@ class TimeReceiver : BroadcastReceiver() {
             editor.commit()
 
         }
-
-        fun setReceiver(context: Context, bool: Boolean) {
-            setLoopEnable(context, bool)
-            if (bool) {
-
-                setNextTime(context)
-            } else {
-                clearNextTime(context)
-            }
-        }
-
 
         @RequiresApi(Build.VERSION_CODES.O)
         private fun getPaddingIntent(context: Context): PendingIntent {
@@ -184,6 +171,9 @@ class TimeReceiver : BroadcastReceiver() {
 
         @RequiresApi(Build.VERSION_CODES.O)
         fun setNextTime(context: Context, nextAlarmTime: Long = -1) {
+
+            //clearNextTime(context)
+
             val calendar = Calendar.getInstance()
 
             calendar.set(Calendar.SECOND, 0)
@@ -220,6 +210,7 @@ class TimeReceiver : BroadcastReceiver() {
                 pendingIntent
             )*/
 
+            LogUtil.i(TAG + TAG_TIMER_CHECK, "setNextTime() result:" + result)
             var info = AlarmManager.AlarmClockInfo(
                 nextTime, null
             )
@@ -228,6 +219,7 @@ class TimeReceiver : BroadcastReceiver() {
 
         @RequiresApi(Build.VERSION_CODES.O)
         fun clearNextTime(context: Context) {
+            LogUtil.i(TAG + TAG_TIMER_CHECK, "clearNextTime()")
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             alarmManager.cancel(getPaddingIntent(context))
 
@@ -406,7 +398,7 @@ class TimeReceiver : BroadcastReceiver() {
                             }
                         }
 
-                        if (bool) {
+                        if (!localSave.getAlarmActive()) {
                             LogUtil.d(TAG, "checkAlarm >> サービス実行")
                             LogUtil.d(TAG, "checkAlarm >> id:" + list!![0].id)
                             LogUtil.d(TAG, "checkAlarm >> owner_id:" + list!![0].owner_id)

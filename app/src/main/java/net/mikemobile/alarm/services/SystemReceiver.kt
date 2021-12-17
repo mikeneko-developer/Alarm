@@ -86,12 +86,6 @@ class SystemReceiver : BroadcastReceiver(){
                     return
                 }
 
-                if (!TimeReceiver.checkLoop(context)) {
-                    LogUtil.i(context, TAG, "ループ処理は終了しています")
-                } else {
-                    TimeReceiver.setNextTime(context)
-                }
-
             }
 
             // アラームチェックの処理を呼び出す

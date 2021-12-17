@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -79,6 +80,17 @@ class ListFragment: BaseFragment(),ListFragmentNavigator {
         var tollbarTitle = binding.includeToolbar.findViewById<TextView>(R.id.toolbar_textview)
         tollbarTitle.setText("アラームリスト")
 
+        val toolbarLeft = binding.includeToolbar.findViewById<ImageButton>(R.id.toolbar_left_button)
+        val toolbarRight = binding.includeToolbar.findViewById<ImageButton>(R.id.toolbar_right_button)
+
+        toolbarLeft.setImageResource(R.drawable.alarm_on)
+        toolbarRight.setImageResource(R.drawable.ic_add)
+        toolbarLeft.setOnClickListener {
+            viewModel.leftClick()
+        }
+        toolbarRight.setOnClickListener {
+            viewModel.rightClick()
+        }
 
         return view
 

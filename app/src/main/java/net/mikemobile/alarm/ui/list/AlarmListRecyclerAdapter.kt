@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import net.mikemobile.alarm.R
 import net.mikemobile.alarm.data.ListItem
 import net.mikemobile.alarm.database.entity.Alarm
 import net.mikemobile.alarm.database.entity.Item
@@ -34,6 +35,12 @@ class AlarmListRecyclerAdapter() : RecyclerView.Adapter<AlarmListViewHolder>() {
 
         // データセット
         holder.binding.setItem(item)
+
+        if (item.alarm != null && item.alarm.sunuzu && item.alarm.sunuzu_count > 0) {
+            holder.binding.listitemClicklayout.setBackgroundResource(R.drawable.frame_list_item_select)
+        } else {
+            holder.binding.listitemClicklayout.setBackgroundResource(R.drawable.frame_list_item)
+        }
 
         //ClickListenerのセットはココ！
         holder.binding.listitemClicklayout.setOnClickListener {

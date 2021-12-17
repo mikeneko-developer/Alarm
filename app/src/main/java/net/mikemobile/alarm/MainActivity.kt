@@ -80,7 +80,6 @@ class MainActivity : BaseActivity(), MainActivityNavigator {
             showAlarmFragment()
         } else {
             android.util.Log.i(TAG,"onCreateView() 3")
-            onUpdateTimeReceiver()
         }
     }
 

@@ -11,10 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.SeekBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import net.mikemobile.databindinglib.base.BaseFragment
@@ -113,6 +110,15 @@ class EditFragment: BaseFragment(), EditFragmentNavigator {
         val tollbarTitle = binding.includeToolbar.findViewById<TextView>(R.id.toolbar_textview)
         tollbarTitle.setText("アラーム編集")
 
+        val toolbarLeft = binding.includeToolbar.findViewById<ImageButton>(R.id.toolbar_left_button)
+        val toolbarRight = binding.includeToolbar.findViewById<ImageButton>(R.id.toolbar_right_button)
+        toolbarLeft.setOnClickListener {
+            onBack()
+        }
+        toolbarRight.setImageResource(R.drawable.ic_save)
+        toolbarRight.setOnClickListener {
+            viewModel.clickSaveAlarm()
+        }
 
         return view
     }

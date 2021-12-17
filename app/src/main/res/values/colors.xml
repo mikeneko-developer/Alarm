@@ -41,6 +41,11 @@
     <color name="colorListItemBorder">#A5A4A4</color>
 
 
+    <color name="colorListItemBackground_gradTopSelect">#FFB257</color>
+    <color name="colorListItemBackground_gradBottomSelect">#FFB257</color>
+    <color name="colorListItemBorderSelect">#A5A4A4</color>
+
+
     <color name="defaultTextColor">#2E2E2E</color>
     <color name="defaultHintColor">#F74A4A4A</color>
 

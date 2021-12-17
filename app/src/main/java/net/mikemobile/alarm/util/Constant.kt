@@ -10,6 +10,8 @@ class Constant{
         var ENABLE_ALARM = false
         var ENABLE_ALARM_SERVICE = false
 
+        const val TAG_TIMER_CHECK = " TIMER_CHECK"
+
 
         enum class AlarmType(val id :Int, val text: String,image_resource: Int)  {
             OneTime(0, "1回", R.mipmap.ic_launcher_round),
