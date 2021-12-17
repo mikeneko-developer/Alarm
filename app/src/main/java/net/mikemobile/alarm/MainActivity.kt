@@ -13,6 +13,7 @@ import net.mikemobile.alarm.database.DataBaseModel
 import net.mikemobile.alarm.databinding.ActivityBaseMainBinding
 import net.mikemobile.alarm.log.LogUtil
 import net.mikemobile.alarm.services.AlarmService
+import net.mikemobile.alarm.services.SystemReceiver
 import net.mikemobile.alarm.services.TimeReceiver
 import net.mikemobile.alarm.setup.DataBindingApplication
 import net.mikemobile.alarm.setup.FragmentFactory
@@ -42,7 +43,7 @@ class MainActivity : BaseActivity(), MainActivityNavigator {
     private val dbModel: DataBaseModel by inject()
 
     companion object {
-        const val TAG: String = "MainActivity"
+        const val TAG: String = "MainActivityTAG"
     }
 
     override fun setActivityApplication(): BaseActivityApplication {
@@ -69,12 +70,16 @@ class MainActivity : BaseActivity(), MainActivityNavigator {
 
         //
         replaceFragmentInContentFrame(ListFragment.TAG, DEFAULT_CONTENT_VIEW_MAIN, null)
+        val localSave = LocalSave(this)
 
         if (intent != null && intent.getIntExtra("alarm", 0) == 1) {
+            android.util.Log.i(TAG,"onCreateView() 1")
             showAlarmFragment()
-        } else if(!AlarmService.activeService(this)){
+        } else if (localSave.getAlarmActive()) {
+            android.util.Log.i(TAG,"onCreateView() 2")
             showAlarmFragment()
         } else {
+            android.util.Log.i(TAG,"onCreateView() 3")
             onUpdateTimeReceiver()
         }
     }

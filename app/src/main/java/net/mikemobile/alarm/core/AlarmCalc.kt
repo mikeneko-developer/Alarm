@@ -21,6 +21,7 @@ class AlarmCalc {
                 item.minute
             )
             Log.i(TAG + " ITEM_SAVE","datetime:" + CustomDateTime.getDateTimeText(datetime))
+            Log.i(TAG + " ITEM_SAVE","startDateTime:" + CustomDateTime.getDateTimeText(startDateTime))
 
             val time = CustomDateTime.getTimeInMillisStartHour(item.hour, item.minute)
             var this_time = CustomDateTime.getJastTimeInMillis()

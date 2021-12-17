@@ -76,7 +76,12 @@ class DialogMusicList : DialogFragment() {
     private var adapterMusic: ListAdapterMusic? = null
     private var mediaData: MediaInfo? = null
     private var selectButton = -1
-    private val position = -1
+    private var position = -1
+
+    private var btnArtist:Button? = null
+    private var btnAlbum:Button? = null
+    private var btnMusic:Button? = null
+
     private fun setView(view: View) {
         val mediaManager = getMediaManager(
             requireContext()
@@ -95,15 +100,47 @@ class DialogMusicList : DialogFragment() {
         adapterArtist = ListAdapter(0, requireContext(), artistList)
         listArtist!!.adapter = adapterArtist
         listArtist!!.onItemClickListener = listenerArtist
-        val btnArtist = view.findViewById<View>(R.id.button_artist) as Button
-        val btnAlbum = view.findViewById<View>(R.id.button_album) as Button
-        val btnMusic = view.findViewById<View>(R.id.button_music) as Button
+        btnArtist = view.findViewById<View>(R.id.button_artist) as Button
+        btnAlbum = view.findViewById<View>(R.id.button_album) as Button
+        btnMusic = view.findViewById<View>(R.id.button_music) as Button
         val btnNegative = view.findViewById<View>(R.id.button_negative) as Button
-        btnArtist.setOnClickListener(clickListener)
-        btnAlbum.setOnClickListener(clickListener)
-        btnMusic.setOnClickListener(clickListener)
+        btnArtist!!.setOnClickListener(clickListener)
+        btnAlbum!!.setOnClickListener(clickListener)
+        btnMusic!!.setOnClickListener(clickListener)
         btnNegative.setOnClickListener { close() }
         if (position != -1) listMusic!!.setSelection(position)
+
+        selectButton(2)
+    }
+
+    private fun selectButton(position: Int) {
+        val artistColor = if (position == 0) {
+            R.drawable.tab_button_select
+        } else {
+            R.drawable.tab_button_default
+        }
+
+        val albumColor = if (position == 1) {
+            R.drawable.tab_button_select
+        } else {
+            R.drawable.tab_button_default
+        }
+
+        val musicColor = if (position == 2) {
+            R.drawable.tab_button_select
+        } else {
+            R.drawable.tab_button_default
+        }
+
+        btnArtist?.let {
+            it.setBackgroundResource(artistColor)
+        }
+        btnAlbum?.let {
+            it.setBackgroundResource(albumColor)
+        }
+        btnMusic?.let {
+            it.setBackgroundResource(musicColor)
+        }
     }
 
     private val clickListener = View.OnClickListener { view ->
@@ -111,11 +148,13 @@ class DialogMusicList : DialogFragment() {
             requireContext()
         )
         if (view.id == R.id.button_artist) {
+            selectButton(0)
             listMusic!!.visibility = View.INVISIBLE
             listAlbum!!.visibility = View.INVISIBLE
             listArtist!!.visibility = View.VISIBLE
             selectButton = view.id
         } else if (view.id == R.id.button_album && selectButton != R.id.button_album) {
+            selectButton(1)
             adapterAlbum!!.setList(mediaManager.onReadAlbumList())
             listAlbum!!.adapter = adapterAlbum
             listMusic!!.visibility = View.INVISIBLE
@@ -123,6 +162,7 @@ class DialogMusicList : DialogFragment() {
             listArtist!!.visibility = View.INVISIBLE
             selectButton = view.id
         } else if (view.id == R.id.button_music && selectButton != R.id.button_music) {
+            selectButton(2)
             showMusicList(mediaManager.onReadMusicList())
             listMusic!!.visibility = View.VISIBLE
             listAlbum!!.visibility = View.INVISIBLE
@@ -137,7 +177,7 @@ class DialogMusicList : DialogFragment() {
             requireContext()
         )
         val albumList: ArrayList<MediaInfo> = mediaManager.onReadArtistToAlbumList(artist)
-        if (albumList[0].title != "戻る") albumList.add(0, MediaInfo("戻る"))
+        if (albumList[0].title != "戻る") albumList.add(0, MediaInfo("戻る", artist, ""))
         adapterAlbum!!.setList(albumList as ArrayList<MediaInfo>)
         listAlbum!!.adapter = adapterAlbum
         listMusic!!.visibility = View.INVISIBLE
@@ -159,13 +199,15 @@ class DialogMusicList : DialogFragment() {
             requireContext()
         )
         val musicList: ArrayList<MediaInfo>
+
+        var artist = ""
         musicList = if (adapterAlbum!!.list!![0].title == "戻る") {
-            val artist = adapterAlbum!!.list!![i].artist
+            artist = adapterAlbum!!.list!![i].artist
             mediaManager.onReadArtistAndAlbumToMusicList(artist, album)
         } else {
             mediaManager.onReadAlbumToMusicList(album)
         }
-        if (musicList[0].title != "戻る") musicList.add(0, MediaInfo("戻る"))
+        if (musicList[0].title != "戻る") musicList.add(0, MediaInfo("戻る", artist, album))
         showMusicList(musicList)
         listMusic!!.visibility = View.VISIBLE
         listAlbum!!.visibility = View.INVISIBLE
@@ -247,7 +289,7 @@ class DialogMusicList : DialogFragment() {
             }
             val textView = convertViews!!.findViewById<View>(R.id.textView2) as TextView
             if (list[posi].title == "戻る") {
-                textView.text = list!![posi].title
+                textView.text = list[posi].title + " " + list[posi].artist + " " + list[posi].album
             } else if (type == 1) {
                 textView.text = list!![posi].album
             } else {
@@ -269,7 +311,12 @@ class DialogMusicList : DialogFragment() {
                 }
 
                 if (artwork == null) {
-                    imageView.setImageResource(net.mikemobile.media.R.drawable.ic_music_note)
+                    if (type == 1) {
+                        imageView.setImageResource(R.drawable.ic_album)
+                    } else {
+                        imageView.setImageResource(R.drawable.ic_artist)
+                    }
+
                     imageView.setColorFilter(Color.rgb(200, 200, 200))
                 } else {
                     imageView.colorFilter = null
@@ -319,13 +366,15 @@ class DialogMusicList : DialogFragment() {
                 convertViews = layoutInflater_.inflate(R.layout.list_dialog_item_music, null)
             }
             val textView = convertViews!!.findViewById<View>(R.id.textView2) as TextView
-            textView.text = list[posi].title
+
 
             val imageView = convertViews!!.findViewById<View>(R.id.imageView4) as ImageView
             if (list[posi].title == "戻る") {
+                textView.text = list[posi].title + " " + list[posi].artist + " " + list[posi].album
                 imageView.setImageResource(net.mikemobile.media.R.drawable.ic_arrow_back)
                 imageView.setColorFilter(Color.rgb(200, 200, 200))
             } else {
+                textView.text = list[posi].title
 
                 val key = list[posi].path
                 var artwork = getArtWork(key, list[posi].path)
@@ -335,7 +384,7 @@ class DialogMusicList : DialogFragment() {
                 }
 
                 if (artwork == null) {
-                    imageView.setImageResource(net.mikemobile.media.R.drawable.ic_music_note)
+                    imageView.setImageResource(R.drawable.ic_music)
                     imageView.setColorFilter(Color.rgb(200, 200, 200))
                 } else {
                     imageView.colorFilter = null

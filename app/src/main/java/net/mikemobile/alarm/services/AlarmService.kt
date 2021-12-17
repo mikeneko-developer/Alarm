@@ -50,21 +50,6 @@ class AlarmService : Service() {
     companion object {
         const val TAG = "AlarmService"
 
-        var ENABLE = false
-
-
-        fun activeService(context: Context): Boolean{
-            val manager: ActivityManager =
-                context.applicationContext.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-            for (serviceInfo in manager.getRunningServices(Int.MAX_VALUE)) {
-                if (AlarmService::class.java.getName() == serviceInfo.service.getClassName()) {
-                    // 実行中なら起動しない
-                    return false
-                }
-            }
-            return true
-        }
-
         fun stop(context: Context) {
             val serviceIntent = Intent(context, AlarmService::class.java)
             context.applicationContext.stopService(serviceIntent)
@@ -80,16 +65,9 @@ class AlarmService : Service() {
             intent.putExtra("sound_path", sound_path)
 
             Log.i(TAG, "start() ------------------------------")
-            if(activeService(context)) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    intent.putExtra("foregroundservice", true)
-                    context.applicationContext.startForegroundService(intent)
-                } else {
-                    intent.putExtra("foregroundservice", false)
-                    context.applicationContext.startService(intent)
-                }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                context.applicationContext.startForegroundService(intent)
             } else {
-                intent.putExtra("foregroundservice", false)
                 context.applicationContext.startService(intent)
             }
 
@@ -111,7 +89,6 @@ class AlarmService : Service() {
         super.onCreate()
         TAG_TIME = "-" + CustomDateTime.getDateTimeText(CustomDateTime.getJastTimeInMillis())
         android.util.Log.i(TAG + TAG_TIME, "onCreate() ------------------------------")
-        ENABLE = true
 
         // 現在のアラームの数を取得する
         startPhoneCallback(this)
@@ -144,17 +121,42 @@ class AlarmService : Service() {
         intent?.let {intent ->
             foregroundservice = intent.getBooleanExtra("foregroundservice", false)
 
-            event = if(intent.getStringExtra("event") == null){"none"}else ({
-                intent.getStringExtra("event")
-            }).toString()
+            if(intent.getStringExtra("event") == null) {
+                event = "none"
+            } else {
+                event = intent.getStringExtra("event")!!
+            }
+
             alarmId = intent.getIntExtra("alarmId", -1)
-            title = if(intent.getStringExtra("title") == null){"none"}else ({intent.getStringExtra("title")})!!.toString()
-            datetime = if(intent.getStringExtra("datetime") == null){"none"}else ({intent.getStringExtra("datetime")})!!.toString()
-            sound_path = if(intent.getStringExtra("sound_path") == null){"none"}else ({intent.getStringExtra("sound_path")})!!.toString()
+
+            if(intent.getStringExtra("title") == null) {
+                title = "none"
+            } else {
+                title = intent.getStringExtra("title")!!
+            }
+
+            if(intent.getStringExtra("datetime") == null) {
+                datetime = "none"
+            } else {
+                datetime = intent.getStringExtra("datetime")!!
+            }
+
+            if(intent.getStringExtra("sound_path") == null) {
+                sound_path = "none"
+            } else {
+                sound_path = intent.getStringExtra("sound_path")!!
+            }
+
         }
 
-        //android.util.Log.i(TAG, "event:" + event)
-        //android.util.Log.i(TAG, "alarmId:" + alarmId)
+        android.util.Log.i(TAG, "event:" + event)
+        android.util.Log.i(TAG, "alarmId:" + alarmId)
+        android.util.Log.i(TAG, "title:" + title)
+        android.util.Log.i(TAG, "datetime:" + datetime)
+        android.util.Log.i(TAG, "sound_path:" + sound_path)
+        android.util.Log.i(TAG, "foregroundservice:" + foregroundservice)
+
+
         if (foregroundservice) {
             createNotification(title, datetime)
         }
@@ -184,7 +186,6 @@ class AlarmService : Service() {
         dbModel.setOnDatabaseToServiceListener(null)
 
         TimeReceiver.clearScreenUnLock(this)
-        ENABLE = false
 
 
         val localSave = LocalSave(this)

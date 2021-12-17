@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Alarm" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Alarm" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
@@ -19,15 +19,14 @@
 
         <!-- Customize your theme here. -->
         <item name="editTextStyle">@style/Theme.Alarm.EditTextStyle</item>
-
-
         <item name="android:textViewStyle">@style/Theme.Alarm.TextViewStyle</item>
         <item name="android:editTextStyle">@style/Theme.Alarm.EditTextStyle</item>
-        <item name="android:buttonStyle">@style/Theme.Alarm.ButtonStyle</item>
+        <!-- <item name="android:buttonStyle">@style/Theme.Alarm.ButtonStyle</item>-->
     </style>
 
     <style name="Theme.Alarm.ButtonStyle" parent="android:Widget.TextView">
         <item name="android:textColor">@color/defaultTextColor</item>
+        <item name="android:background">@color/black</item>
     </style>
 
     <style name="Theme.Alarm.TextViewStyle" parent="android:Widget.TextView">

@@ -35,12 +35,12 @@ data class MediaInfo(
         data = (item[MediaInfo.KEY_DATA] as Uri?),
         album_id = (item[MediaInfo.KEY_ALBUM_ID] as String?)!!
     ) {}
-    constructor(title: String):this(
+    constructor(title: String, artist: String, album: String):this(
         mediaType = 0,
         mid = 0,
         title = title,
-        artist = "",
-        album = "",
+        artist = artist,
+        album = album,
         path = "",
         time = "",
         track = 0,

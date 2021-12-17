@@ -58,6 +58,7 @@ interface EditFragmentNavigator: BaseNavigator {
 
     fun onChangeVolume(progress: Int)
     fun onChangeVib(type: Int)
+    fun onStopVib()
 
     fun saveFinish()
 
@@ -198,6 +199,10 @@ class EditFragment: BaseFragment(), EditFragmentNavigator {
         startVib(type)
     }
 
+    override fun onStopVib() {
+        stopVib()
+    }
+
 
     override fun openTimeDialog(time:Long){
         var dialog = CDialogTimePicker.newInstance(time)
@@ -286,7 +291,6 @@ class EditFragment: BaseFragment(), EditFragmentNavigator {
             return
         }else if (vibrator != null) {
             stopVib()
-            return
         }
 
         vibrator = requireContext().getSystemService(Context.VIBRATOR_SERVICE) as Vibrator

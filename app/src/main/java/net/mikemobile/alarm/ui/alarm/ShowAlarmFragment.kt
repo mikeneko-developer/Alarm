@@ -67,8 +67,9 @@ class ShowAlarmFragment: BaseFragment(), ShowAlarmFragmentNavigator {
 
     override fun onResume() {
         super.onResume()
+
         activity?.let {
-            it.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR)
+            it.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT)
         }
     }
 
@@ -81,9 +82,6 @@ class ShowAlarmFragment: BaseFragment(), ShowAlarmFragmentNavigator {
     override fun onDestroy() {
         super.onDestroy()
         viewModel.removeObserver()
-        activity?.let {
-            it.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT)
-        }
     }
 
     //
