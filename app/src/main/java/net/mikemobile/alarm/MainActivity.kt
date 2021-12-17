@@ -86,7 +86,7 @@ class MainActivity : BaseActivity(), MainActivityNavigator {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        android.util.Log.i(TAG,"onNewIntent()")
+        android.util.Log.i(TAG+ " ALARM_CHECK","onNewIntent()")
 
         val localSave = LocalSave(this)
         if (localSave.getAlarmActive()) {

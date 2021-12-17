@@ -103,7 +103,7 @@ class AlarmService : Service() {
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-        android.util.Log.i(TAG + TAG_TIME, "onStartCommand() ------------------------------")
+        android.util.Log.i(TAG + " ALARM_CHECK" + TAG_TIME, "onStartCommand() ------------------------------")
         init()
 
         try {
@@ -147,6 +147,11 @@ class AlarmService : Service() {
                 sound_path = intent.getStringExtra("sound_path")!!
             }
 
+
+            val localSave = LocalSave(this)
+            localSave.saveAlarmActive(true)
+            localSave.saveAlarmId(alarmId)
+
         }
 
         android.util.Log.i(TAG, "event:" + event)
@@ -189,7 +194,8 @@ class AlarmService : Service() {
 
 
         val localSave = LocalSave(this)
-        localSave.savePhoneActive(false)
+        localSave.saveAlarmActive(false)
+        localSave.saveAlarmId(-1)
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -204,7 +210,7 @@ class AlarmService : Service() {
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////
     private fun destoryService(){
-        Log.i(TAG + TAG_TIME, "destoryService()")
+        Log.i(TAG + " ALARM_CHECK" + TAG_TIME, "destoryService()")
 
         stopReceiver(this)
         //RepeatTimeReceiver.onRepeatStop(this)
@@ -218,6 +224,7 @@ class AlarmService : Service() {
 
 
     fun checkAlarm(){
+        Log.i(TAG + " ALARM_CHECK", "checkAlarm()")
         try {
             dbModel.setOnDatabaseToServiceListener(AlarmListener())
         }catch(e: Exception) {
@@ -277,6 +284,7 @@ class AlarmService : Service() {
     }
 
     fun showActivity(context: Context) {
+        Log.i(TAG + " ALARM_CHECK", "showActivity()")
 
         SystemReceiver.openActivity(context)
     }
@@ -295,6 +303,7 @@ class AlarmService : Service() {
             startVib(alarm.vib)
             return
         }
+        Log.i(TAG + " ALARM_CHECK", "showAlarm()")
 
         checkMusic(this)
 
@@ -574,7 +583,7 @@ class AlarmService : Service() {
 
             context?.let {context ->
                 intent?.let {
-                    android.util.Log.i(TAG + TAG_TIME,"action:" + it.action)
+                    android.util.Log.i(TAG + TAG_TIME + " ALARM_CHECK","action:" + it.action)
 
                     // ループ処理をチェックする
                     if (it.action.equals("net.mikemobile.myaction.alarm.stop")) {
@@ -583,6 +592,12 @@ class AlarmService : Service() {
 
                     if (it.action.equals("net.mikemobile.myaction.alarm.sunuzu")) {
                         sunuzuAlarm()
+                    }
+
+                    if (it.action.equals("net.mikemobile.myaction.alarm.start")) {
+
+                        // Activityの起動
+                        showActivity(context)
                     }
                 }
             }

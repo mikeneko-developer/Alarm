@@ -1,11 +1,14 @@
 package net.mikemobile.alarm.tools
 
 import android.content.Context
+import net.mikemobile.alarm.log.LogUtil
+import net.mikemobile.alarm.services.SystemReceiver
 import net.mikemobile.alarm.util.PreferenceUtil
 
 class LocalSave(val context: Context) {
 
     fun saveAlarmActive(bool: Boolean) {
+        LogUtil.d(context, "LocalSave" + " ALARM_CHECK", "saveAlarmActive >> bool:" + bool)
         PreferenceUtil.setBoolean(context, "alarm_data","alarmActive", bool)
     }
     fun getAlarmActive(): Boolean {

@@ -61,7 +61,7 @@ class SystemReceiver : BroadcastReceiver(){
                     LogUtil.d(context, TAG, "アプリの再インストール・更新")
 
                 } else if (it.action == Intent.ACTION_USER_PRESENT) {
-                    LogUtil.d(context, TAG, "スクリーンロック解除検知")
+                    LogUtil.d(context, TAG + " ALARM_CHECK", "スクリーンロック解除検知")
                     LogUtil.toast(context.applicationContext, "スクリーンロック解除検知")
 
                     screenLockTo(context, false)
@@ -69,6 +69,7 @@ class SystemReceiver : BroadcastReceiver(){
                     return
 
                 } else if (it.action == Intent.ACTION_SCREEN_ON) {
+                    LogUtil.d(context, TAG + " ALARM_CHECK", "ACTION_SCREEN_ON")
                     val keyguardManager = context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
                     LogUtil.toast(context.applicationContext, "ACTION_SCREEN_ON")
 
@@ -101,54 +102,56 @@ class SystemReceiver : BroadcastReceiver(){
 
     fun screenLockTo(context: Context, screenLock: Boolean) {
         if (screenLock) {
-            LogUtil.d(context, TAG, "スクリーンロック状態")
+            LogUtil.d(context, TAG + " ALARM_CHECK", "スクリーンロック状態")
             return
         }
 
         val localSave = LocalSave(context)
         if (!localSave.getAlarmActive()) {
-            LogUtil.d(context, TAG, "アラームは実行されていない")
+            LogUtil.d(context, TAG + " ALARM_CHECK", "アラームは実行されていない")
             return
         }
         val alarmId = localSave.getAlarmId()
 
         // アラームIDをチェック
         if (alarmId == -1) {
-            LogUtil.d(context, TAG, "アラームIDが存在しません")
+            LogUtil.d(context, TAG + " ALARM_CHECK", "アラームIDが存在しません")
             return
         }
 
         if (localSave.getPhoneActive()) {
-            LogUtil.d(context, TAG, "電話がかかっています")
+            LogUtil.d(context, TAG + " ALARM_CHECK", "電話がかかっています")
             return
         }
 
+        LogUtil.d(context, TAG + " ALARM_CHECK", "サービスを実行します")
         // サービス実行
         val intent = Intent("net.mikemobile.myaction.alarm.start")
         intent.setPackage("net.mikemobile.alarm")
         intent.putExtra("alarmId", alarmId)
         context.applicationContext.sendBroadcast(intent)
 
-        SystemReceiver.openActivity(context)
+        //SystemReceiver.openActivity(context)
     }
 
     companion object {
         const val TAG = "SystemReceiver"
 
         fun openActivity(context: Context) {
-            LogUtil.w(TAG, "openActivity")
+            LogUtil.w(TAG + " ALARM_CHECK", "openActivity")
 
             val app = context.applicationContext as DataBindingApplication
             if(!app.isAppActived()) {
-                LogUtil.d(context, TAG, "MainActivityを新規に起動")
+                LogUtil.d(context, TAG + " ALARM_CHECK", "MainActivityを新規に起動")
                 val serviceIntent = Intent(context, MainActivity::class.java)
                 serviceIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 context.applicationContext.startActivity(serviceIntent)
+
             } else if(!app.isAppForeground()) {
-                LogUtil.d(context, TAG, "MainActivityをforegroundに移動")
+                LogUtil.d(context, TAG + " ALARM_CHECK", "MainActivityをforegroundに移動")
                 moveTaskToFront(context)
             } else {
-                LogUtil.d(context, TAG, "MainActivityはforegroundで動作中")
+                LogUtil.d(context, TAG + " ALARM_CHECK", "MainActivityはforegroundで動作中")
             }
         }
 

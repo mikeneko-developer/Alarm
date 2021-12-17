@@ -386,11 +386,14 @@ class TimeReceiver : BroadcastReceiver() {
                         list = ArrayList<Alarm>()
                     }
 
-                    LogUtil.d(TAG, "checkAlarm >> list.size:" + list!!.size)
+                    //LogUtil.d(TAG + " ALARM_CHECK", "checkAlarm >> list.size:" + list!!.size)
                     val localSave = LocalSave(context)
 
                     if (list!!.size > 0) {
-                        LogUtil.d(TAG, "checkAlarm >> アラームがあります")
+                        LogUtil.d(TAG + " ALARM_CHECK", "checkAlarm >> アラームがあります")
+
+                        //localSave.saveAlarmActive(true)
+                        //localSave.saveAlarmId(list!![0].id)
 
                         var bool = false
                         val date = CustomDateTime.getJastTimeInMillis()
@@ -427,20 +430,18 @@ class TimeReceiver : BroadcastReceiver() {
                                 list!![0].sound_path
                             )
 
-                            localSave.saveAlarmActive(true)
-                            localSave.saveAlarmId(list!![0].id)
                         }
                     } else {
-                        LogUtil.e(TAG, "checkAlarm >> アラームはありません")
+                        LogUtil.e(TAG + " ALARM_CHECK", "checkAlarm >> アラームはありません")
 
-                        localSave.saveAlarmActive(false)
-                        localSave.saveAlarmId(-1)
+                        //localSave.saveAlarmActive(false)
+                        //localSave.saveAlarmId(-1)
 
                         TimeReceiver.clearScreenUnLock(context)
                     }
                 },
                 onError = {
-                    LogUtil.e(TAG, "checkAlarm onError : " + it.toString())
+                    LogUtil.e(TAG + " ALARM_CHECK", "checkAlarm onError : " + it.toString())
                 }
             )
         }
