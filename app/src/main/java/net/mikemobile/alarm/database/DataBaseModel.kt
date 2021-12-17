@@ -360,6 +360,8 @@ class DataBaseModel(private val context: Context){
             }
         )
     }
+
+
     fun readAlarm(time: Long) {
         var list:List<Alarm>? = null
         Completable.fromCallable {

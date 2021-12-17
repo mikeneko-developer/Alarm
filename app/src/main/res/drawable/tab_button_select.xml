@@ -11,7 +11,7 @@
                 android:bottomLeftRadius="10dp"
                 android:bottomRightRadius="10dp"/>
             <stroke android:width="2dp"
-                android:color="@color/teal_700"/>
+                android:color="@color/colorPrimaryDark"/>
         </shape>
     </item>
 </selector>

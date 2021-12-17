@@ -54,13 +54,11 @@ class ListViewModel(
         }
     }
 
-
     fun initialize(){
     }
 
     fun resume(fragment: BaseFragment){
         LogUtil.i(TAG,"resume()")
-
         dataRepository.readItemList.observe(fragment, readItemListObserver)
 
         // ガイド終了時の処理

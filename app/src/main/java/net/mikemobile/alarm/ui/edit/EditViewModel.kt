@@ -459,11 +459,12 @@ class EditViewModel(
         data.value?.let{item ->
             if(item.vib == 0){
                 item.vib = 1
+                navigator?.onChangeVib(item.vib)
             }else {
                 item.vib = 0
+                navigator?.onStopVib()
             }
             data.postValue(item)
-            navigator?.onChangeVib(item.vib)
         }
     }
 

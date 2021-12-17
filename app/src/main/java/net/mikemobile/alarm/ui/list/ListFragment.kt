@@ -103,7 +103,7 @@ class ListFragment: BaseFragment(),ListFragmentNavigator {
     override fun onResume() {
         super.onResume()
         activity?.let {
-            //it.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT)
+            it.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT)
         }
 
         viewModel.resume(this)

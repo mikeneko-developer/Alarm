@@ -95,6 +95,7 @@ class DataRepository(var databaseModel: DataBaseModel)  {
                     Log.i("TESTTEST","onSavedItem > " + key)
                     dataRepositoryListener[key]?.onSavedItem(item)
                 }
+
             }
 
             override fun onDeleted(item: Item) {
@@ -171,7 +172,6 @@ class DataRepository(var databaseModel: DataBaseModel)  {
         this.postValue(ArrayList<SunuzuItem>())
     }
 
-
     /**
      * DataRepositoryListener登録用メソッドと変数
      */
@@ -245,6 +245,14 @@ class DataRepository(var databaseModel: DataBaseModel)  {
     fun readAlarm(listener: AlarmDataListener){
         alarmListener = listener
         databaseModel.readAlarm()
+    }
+
+    fun readAlarm(){
+        databaseModel.readAlarm()
+    }
+
+    fun readAlarm(time: Long){
+        databaseModel.readAlarm(time)
     }
 
     fun skipAlarm(alarm: Alarm) {
