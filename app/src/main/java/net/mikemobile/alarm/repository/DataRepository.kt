@@ -260,6 +260,10 @@ class DataRepository(var databaseModel: DataBaseModel)  {
         databaseModel.deleteAlarm(alarm.owner_id, alarm.datetime)
     }
 
+    fun skipPrevAlarm(alarm: Alarm) {
+        databaseModel.skipPrevAlarm(alarm.owner_id, alarm.datetime)
+    }
+
     ///////////////////////////////////////////////////////////////////////////////
     var editSunuzuPosition: Int = -1
     var editSunuzuNextMinute: Int = 5

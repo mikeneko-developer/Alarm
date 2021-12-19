@@ -141,14 +141,31 @@
 
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/list_item_alarm_skip"
+                <FrameLayout
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/btn_selector"
-                    android:text="スキップ"
-                    android:visibility="@{item.enableSKipAlarm() ? View.VISIBLE : View.GONE}"
-                    android:textColor="@color/white" />
+                    android:orientation="horizontal"
+                    android:visibility="@{item.enableSKipAlarm() ? View.VISIBLE : View.GONE}">
+
+                    <Button
+                        android:id="@+id/list_item_alarm_prev_skip"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/btn_selector"
+                        android:gravity="right|center_vertical"
+                        android:text="@string/skip_left"
+                        android:textColor="@color/white" />
+
+                    <Button
+                        android:id="@+id/list_item_alarm_skip"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/btn_selector"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/skip_right"
+                        android:textColor="@color/white" />
+                </FrameLayout>
 
                 <Button
                     android:id="@+id/list_item_alarm_stop"

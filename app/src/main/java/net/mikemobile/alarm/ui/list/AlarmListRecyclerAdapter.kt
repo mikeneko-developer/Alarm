@@ -65,6 +65,11 @@ class AlarmListRecyclerAdapter() : RecyclerView.Adapter<AlarmListViewHolder>() {
             listener.onItemAlarmSkipClick(it, position, item)
         }
 
+        holder.binding.listItemAlarmPrevSkip.setOnClickListener {
+            //処理はRecordModel#itemClickに実装
+            listener.onItemPrevAlarmSkipClick(it, position, item)
+        }
+
         // Viewへの反映を即座に行う
         holder.binding.executePendingBindings()
     }
@@ -76,6 +81,7 @@ class AlarmListRecyclerAdapter() : RecyclerView.Adapter<AlarmListViewHolder>() {
     interface OnItemClickListener {
         fun onItemClick(view: View, position: Int, data: ListItem)
         fun onItemAlarmSkipClick(view: View, position: Int, data: ListItem)
+        fun onItemPrevAlarmSkipClick(view: View, position: Int, data: ListItem)
         fun onItemAlarmStopClick(view: View, position: Int, data: ListItem)
         fun onItemChecked(view: View, position: Int, isChecked: Boolean, data: ListItem)
     }

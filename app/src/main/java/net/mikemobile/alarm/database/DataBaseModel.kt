@@ -433,6 +433,51 @@ class DataBaseModel(private val context: Context){
         )
     }
 
+    fun skipPrevAlarm(owner_id: Int, start_datetime: Long = 0L) {
+        Log.i(TAG,"skipPrevAlarm")
+        var readItemList = mutableListOf<ListItem>()
+
+        Completable.fromCallable {
+            dbModel.runInTransaction {
+                deleteAlarmData(owner_id)
+
+                val item = readItemData(owner_id)
+
+                Log.i(TAG,"item = " + (item != null))
+                item?.let{
+                    if(item.type == Constant.Companion.AlarmType.OneTime.id){
+                        Log.i(TAG,"OneTime")
+                        item.onoff = false
+                        val saveItemData = saveItemData(item, null)
+
+                    }else if(item.type == Constant.Companion.AlarmType.LoopWeek.id) {
+                        Log.i(TAG,"LoopWeek")
+                        var nextAlarm = AlarmCalc.calcPrevAlarm(item, 0, start_datetime)
+                        dbModel.onAlarmDataDao().create(nextAlarm)
+                    }
+                }
+
+                //データが更新されたのでリストを再取得する
+                readItemList = readItemListData()
+            }
+        }.subscribeOn(Schedulers.io()).subscribeBy(
+            onComplete = {
+                Log.i(TAG,"onComplete")
+                serviceListener?.onDeleteAlarm()
+
+                for(key in databaseModelListener.keys) {
+                    databaseModelListener[key]?.onDeleteAlarm()
+                    databaseModelListener[key]?.onReadItemList(readItemList)
+                }
+            },
+            onError = {
+                for(key in databaseModelListener.keys) {
+                    databaseModelListener[key]?.onError(DataBaseManager.Companion.ERROR_TYPE.DELETE, "ALARM 削除失敗")
+                }
+            }
+        )
+    }
+
     fun deleteAlarm(owner_id: Int, start_datetime: Long = 0L) {
         Log.i(TAG,"deleteAlarm")
         var readItemList = mutableListOf<ListItem>()

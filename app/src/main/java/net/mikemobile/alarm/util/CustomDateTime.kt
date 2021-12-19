@@ -271,8 +271,6 @@ class CustomDateTime{
         }
 
         /**
-         *
-         * todayEnable : 当日
          */
         fun getNextWeekDateTime(time: Long, week: ArrayList<Int>): Long {
 
@@ -329,6 +327,75 @@ class CustomDateTime{
             }
 
             datetime = getNextDate(datetime, move)
+
+            return datetime
+        }
+
+
+
+        /**
+         */
+        fun getPrevWeekDateTime(time: Long, week: ArrayList<Int>): Long {
+            val today = getTimeInMillis(getYear(), getMonth(), getDay(), getHour(time), getMinute(time))
+
+            // 今日の日付を取得する
+            val year = getYear(time)
+            val month = getMonth(time)
+            val day = getDay(time)
+
+            // 時・分は変えずにミリ秒を取得する
+            var datetime = getTimeInMillis(year, month, day, getHour(time), getMinute(time))
+
+            // 曜日を取得
+            val this_week = getWeek(datetime)
+
+            var move = 0
+            val start = 1
+            val end = 7
+
+            // 次の指定曜日を確認し、次までの移動日を確認する
+            for (count in start..end) {
+                var next_week = this_week - count
+
+                android.util.Log.i(
+                    "ItemLog",
+                    "this_week:" + this_week + "  next_week:" + next_week
+                )
+
+                if (next_week < 0) {
+                    next_week = 7 + next_week
+                }
+
+                if (next_week == Calendar.SUNDAY && week[0] == 1) {
+                    move -= count
+                    break
+                } else if (next_week == Calendar.MONDAY && week[1] == 1) {
+                    move -= count
+                    break
+                } else if (next_week == Calendar.TUESDAY && week[2] == 1) {
+                    move -= count
+                    break
+                } else if (next_week == Calendar.WEDNESDAY && week[3] == 1) {
+                    move -= count
+                    break
+                } else if (next_week == Calendar.THURSDAY && week[4] == 1) {
+                    move -= count
+                    break
+                } else if (next_week == Calendar.FRIDAY && week[5] == 1) {
+                    move -= count
+                    break
+                } else if (next_week == Calendar.SATURDAY && week[6] == 1) {
+                    move -= count
+                    break
+                }
+            }
+
+            datetime = getNextDate(datetime, move)
+
+            if(today >= datetime) {
+                // 取得した日が今日かそれよりも前の日の場合、今日から最初の予定日で計算し直す
+                datetime = getNextWeekDateTime(today, week)
+            }
 
             return datetime
         }

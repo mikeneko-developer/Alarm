@@ -10,4 +10,7 @@
 
     <string name="show_alarm_btn_sunuzu1">停止</string>
     <string name="show_alarm_btn_sunuzu2">スヌーズ</string>
+
+    <string name="skip_left">スキ\n戻る　　</string>
+    <string name="skip_right">ップ\n　　進む</string>
 </resources>

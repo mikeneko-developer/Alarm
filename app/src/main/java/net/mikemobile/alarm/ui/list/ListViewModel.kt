@@ -120,6 +120,10 @@ class ListViewModel(
         dataRepository.skipAlarm(item.alarm)
     }
 
+    fun clickPrevSkipAlarm(item: ListItem) {
+        dataRepository.skipPrevAlarm(item.alarm)
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun updateList(){
@@ -185,6 +189,10 @@ class ListViewModel(
      */
     override fun onItemAlarmSkipClick(view: View, position: Int, data: ListItem) {
         clickSkipAlarm(data)
+    }
+
+    override fun onItemPrevAlarmSkipClick(view: View, position: Int, data: ListItem) {
+        clickPrevSkipAlarm(data)
     }
 
     override fun onItemAlarmStopClick(view: View, position: Int, data: ListItem) {
