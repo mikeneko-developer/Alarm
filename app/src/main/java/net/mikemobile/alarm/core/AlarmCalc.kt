@@ -60,7 +60,13 @@ class AlarmCalc {
                 if(datetime <= this_time) {
                     if (time <= this_time) {
                         Log.i(TAG + " ITEM_SAVE","今日の日付で指定時刻でも現在時刻より前")
-                        datetime = CustomDateTime.getNextDate(this_time, 1)
+                        datetime = CustomDateTime.getNextDate(CustomDateTime.getTimeInMillis(
+                            CustomDateTime.getYear(this_time),
+                            CustomDateTime.getMonth(this_time),
+                            CustomDateTime.getDay(this_time),
+                            item.hour,
+                            item.minute
+                        ), 1)
                     } else {
                         Log.i(TAG + " ITEM_SAVE","指定の日付が現在時刻より前")
                         datetime = time
@@ -112,10 +118,18 @@ class AlarmCalc {
                 Log.i(TAG + " ITEM_SAVE",
                     "OneTime -> datetime:" + CustomDateTime.getDateTimeText(datetime))
             }else if(item.type == Constant.Companion.AlarmType.LoopWeek.id){
+                datetime = CustomDateTime.getTimeInMillis(
+                    CustomDateTime.getYear(this_time),
+                    CustomDateTime.getMonth(this_time),
+                    CustomDateTime.getDay(this_time),
+                    CustomDateTime.getHour(datetime),
+                    CustomDateTime.getMinute(datetime)
+                )
 
 
                 // 曜日で定めるので、常に今日の日付を基準に計算・処理を行う
                 Log.i(TAG + " ITEM_SAVE","prev:" + CustomDateTime.getDateTimeText(datetime))
+
 
                 val weekList = item.getWeekList()
                 datetime = CustomDateTime.getPrevWeekDateTime(this_time, weekList)

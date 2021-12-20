@@ -1,5 +1,7 @@
 package net.mikemobile.alarm.util
 
+import android.util.Log
+import net.mikemobile.alarm.core.AlarmCalc
 import java.util.*
 
 class CustomDateTime{
@@ -286,8 +288,16 @@ class CustomDateTime{
             val this_week = getWeek(datetime)
 
             var move = 0
-            val start = 0
-            val end = 6
+            var start = 0
+            var end = 6
+            Log.i(AlarmCalc.TAG,"    time:" + getDateTimeText(time))
+            Log.i(AlarmCalc.TAG,"datetime:" + getDateTimeText(datetime))
+
+            if (datetime < getJastTimeInMillis()) {
+                Log.i(AlarmCalc.TAG,"datetimeが今日の指定時刻と同じかそれ未満なので明日以降にする")
+                start = 1
+                end = 7
+            }
 
             // 次の指定曜日を確認し、次までの移動日を確認する
             for (count in start..end) {
@@ -389,14 +399,39 @@ class CustomDateTime{
                     break
                 }
             }
-
             datetime = getNextDate(datetime, move)
 
+            android.util.Log.i(
+                "TESTTESTTESTTEST",
+                "datetime:" + CustomDateTime.getDateTimeText(datetime)
+            )
+
+            android.util.Log.i(
+                "TESTTESTTESTTEST",
+                "today:" + CustomDateTime.getDateTimeText(today)
+            )
             if(today >= datetime) {
                 // 取得した日が今日かそれよりも前の日の場合、今日から最初の予定日で計算し直す
+
+                android.util.Log.i(
+                    "TESTTESTTESTTEST",
+                    "今日を含めて日付が古い"
+                )
                 datetime = getNextWeekDateTime(today, week)
             }
 
+            android.util.Log.i(
+                "TESTTESTTESTTEST",
+                "datetime2:" + CustomDateTime.getDateTimeText(datetime)
+            )
+            android.util.Log.i(
+                "TESTTESTTESTTEST",
+                "datetime1:" + datetime
+            )
+            android.util.Log.i(
+                "TESTTESTTESTTEST",
+                "datetime2:" + today
+            )
             return datetime
         }
     }
